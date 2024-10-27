@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDTO createUser(UserDTO user) {
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		// TODO Auto-generated method stub
 		return this.entityToDto(dao.save(this.dtoToEntity(user)));
 	}
