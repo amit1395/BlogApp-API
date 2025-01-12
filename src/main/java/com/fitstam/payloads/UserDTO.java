@@ -28,6 +28,7 @@ public class UserDTO {
 	private String name;
 	
 	@Email(message="Email address is not valid !")
+	@NotEmpty
 	private String email;
 	
 	@NotEmpty

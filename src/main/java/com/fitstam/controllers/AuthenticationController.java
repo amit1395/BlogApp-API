@@ -17,6 +17,8 @@ import com.fitstam.security.CustomUserDetailService;
 import com.fitstam.security.JwtTokenHelper;
 import com.fitstam.services.UserService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "*")
@@ -59,7 +61,7 @@ public class AuthenticationController {
 	
 	// register new user
 	@PostMapping("/register")
-	public ResponseEntity<UserDTO> registerNewUser(@RequestBody UserDTO request) throws Exception{
+	public ResponseEntity<UserDTO> registerNewUser(@RequestBody @Valid  UserDTO request) throws Exception{
 			
 		UserDTO registerNewUser = this.userService.registerNewUser(request);
 		
