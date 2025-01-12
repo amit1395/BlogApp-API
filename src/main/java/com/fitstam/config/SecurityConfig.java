@@ -1,6 +1,7 @@
 package com.fitstam.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,6 +15,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.fitstam.security.CustomUserDetailService;
@@ -87,6 +91,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		// TODO Auto-generated method stub
 		return super.authenticationManagerBean();
+	}
+
+	public FilterRegistrationBean corsFilter(){
+		UrlBasedCorsConfigurationSource corsSource= new UrlBasedCorsConfigurationSource();
+		CorsConfiguration corsConfig= new CorsConfiguration();
+		corsConfig.setAllowCredentials(true);
+		corsConfig.addAllowedOriginPattern("*");
+		corsConfig.addAllowedHeader("Authorization");
+		corsConfig.addAllowedHeader("Content-Type");
+		corsConfig.addAllowedHeader("Accept");
+		corsConfig.addAllowedMethod("POST");
+		corsConfig.addAllowedMethod("GET");
+		corsConfig.addAllowedMethod("DELETE");
+		corsConfig.addAllowedMethod("PUT");
+		corsConfig.addAllowedMethod("OPTIONS");
+		corsConfig.setMaxAge(3600l);
+
+		corsSource.registerCorsConfiguration("/**",corsConfig);
+
+		FilterRegistrationBean corsBean = new FilterRegistrationBean(new CorsFilter(corsSource));
+		return corsBean;
 	}
 	
 
